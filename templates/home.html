@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Sign Classification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px; 
+            background-color: #fef9e7;
+        }
+        h1 {
+            color: #7f6d3e; 
+            margin-bottom: 30px; 
+            text-align: center;
+            font-size: 2em; 
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid #eae3c4; 
+            padding: 30px;
+            border-radius: 12px;
+            background-color: #fdf6e4; 
+            max-width: 450px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        input[type="file"] {
+            margin: 13px 0;
+            padding: 12px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            width: 100%;
+        }
+        button {
+            background-color: #7f6d3e; 
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        #uploaded-image {
+            margin-top: 20px;
+            max-width: 80%; /* Increased to 80% for larger size */
+            max-height: 400px; /* Limit the height */
+            border: 1px solid #ddd; /* Add a border for better visibility */
+            border-radius: 10px;
+            display: none; /* Initially hidden */
+        }
+        #prediction {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>UPLOAD TRAFFIC SIGN FOR CLASSIFICATION</h1>
+    <div class="container">
+        <form action="/classify" method="post" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required id="image-input">
+            <button type="submit">Upload and Classify</button>
+            <button type="button" id="clear-button">Clear</button>
+        </form>
+    </div>
+        <img id="uploaded-image" src="">
+        {% if result %}
+        <div id="prediction">Predicted class: {{ result }}</div>
+        {% endif %}
+    
+
+    <script>
+        // JavaScript to display the selected image
+        document.getElementById('image-input').addEventListener('change', function(event) {
+            const input = event.target;
+            const reader = new FileReader();
+            reader.onload = function() {
+                const img = document.getElementById('uploaded-image');
+                img.src = reader.result;
+                img.style.display = 'block'; // Show the image
+                document.getElementById('prediction').textContent = ''; // Clear previous prediction
+            }
+            reader.readAsDataURL(input.files[0]);
+        });
+
+        // Clear the image and prediction when the clear button is pressed
+        document.getElementById('clear-button').addEventListener('click', function() {
+            document.getElementById('uploaded-image').src = '';
+            document.getElementById('uploaded-image').style.display = 'none';
+            document.getElementById('prediction').textContent = '';
+            document.getElementById('image-input').value = ''; // Clear the input field
+        });
+    </script>
+</body>
+</html>

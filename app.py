@@ -4,9 +4,9 @@ import pickle
 from PIL import Image
 import pandas as pd
 import io
+from tensorflow.keras.models import load_model
 
-# Load the pre-trained model
-model = pickle.load(open('model.pkl', 'rb'))
+model = load_model("model.h5")
 
 # Load labels from signname.csv
 labels_df = pd.read_csv('signname.csv')

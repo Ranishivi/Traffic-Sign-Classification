@@ -5,4 +5,3 @@ Pillow==11.0.0
 gunicorn==21.2.0
 keras==3.4.1
 tensorflow==2.16.2
-tensorrt==10.5.0
